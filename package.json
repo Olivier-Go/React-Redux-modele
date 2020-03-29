@@ -16,6 +16,7 @@
     "@babel/preset-react": "*",
     "babel-eslint": "*",
     "babel-loader": "*",
+    "bundle-stats-webpack-plugin": "^2.0.1",
     "clean-webpack-plugin": "*",
     "copy-webpack-plugin": "*",
     "cross-env": "*",
@@ -45,7 +46,6 @@
     "webpack-merge": "*"
   },
   "dependencies": {
-    "bundle-stats-webpack-plugin": "^2.0.1",
     "prop-types": "*",
     "react": "*",
     "react-dom": "*"
