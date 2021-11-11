@@ -1,12 +1,21 @@
 const paths = require('./paths');
-const merge = require('webpack-merge');
-const common = require('./webpack.common.js');
+const webpack = require('webpack');
+const { merge } = require('webpack-merge');
+const Common = require('./webpack.common.js');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { BundleStatsWebpackPlugin } = require('bundle-stats-webpack-plugin');
+const DotenvPlugin = require('dotenv');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 
-module.exports = merge.smart(common, {
+const env = DotenvPlugin.config({ path: '.env.' + process.env.NODE_ENV}).parsed;
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
+
+module.exports = merge(Common, {
   mode: 'production',
   devtool: false,
   output: {
@@ -20,6 +29,10 @@ module.exports = merge.smart(common, {
     }),
     // Stats bundle
     new BundleStatsWebpackPlugin(),
+    // .env
+    new webpack.DefinePlugin(envKeys),
+    // Manifest
+    new WebpackPwaManifest()
   ],
   module: {
     rules: [

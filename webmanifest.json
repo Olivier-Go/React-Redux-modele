@@ -1,0 +1,32 @@
+{
+  "filename": "manifest.webmanifest",
+  "name": "react-modele",
+  "short_name": "react-modele",
+  "description": "react-modele",
+  "background_color": "#fff",
+  "inject": true,
+  "fingerprints": true,
+  "theme_color": "#fff",
+  "display": "standalone",
+  "start_url": ".",
+  "includeDirectory": true,
+  "icons": [
+    {
+      "src": "src/assets/favicon.png",
+      "sizes": [96, 128, 192, 256, 384, 512]
+    },
+    {
+      "src": "src/assets/favicon.png",
+      "size": "1024x1024"
+    },
+    {
+      "src": "src/assets/favicon.png",
+      "size": "1024x1024",
+      "purpose": "maskable"
+    }
+  ],
+  "ios": {
+    "apple-mobile-web-app-title": "react-modele",
+    "apple-mobile-web-app-status-bar-style": "#fff"
+  }
+}

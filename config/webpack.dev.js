@@ -1,13 +1,24 @@
 const paths = require('./paths');
 const webpack = require('webpack');
-const merge = require('webpack-merge');
-const common = require('./webpack.common.js');
+const { merge } = require('webpack-merge');
+const Common = require('./webpack.common.js');
+const DotenvPlugin = require('dotenv');
 
 const port = 8080;
 
-module.exports = merge(common, {
+const env = DotenvPlugin.config({ path: '.env.' + process.env.NODE_ENV}).parsed;
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
+
+module.exports = merge(Common, {
   mode: 'development',
   devtool: 'inline-source-map',
+  plugins: [
+    // .env
+    new webpack.DefinePlugin(envKeys),
+  ],
   module: {
     rules: [
       // Styles
@@ -54,5 +65,8 @@ module.exports = merge(common, {
     compress: true,
     hot: true,
     port,
+    /* For specific Devserver only */
+    //disableHostCheck: true,
+    //host: '192.168.0.150',
   },
 });
